@@ -1,22 +1,32 @@
-module.exports.index = (req, res) => {
-    res.send("All Books")
+import Book from '../models/books.js'
+
+export const index = async (req, res) => {
+    const allBooks = await Book.find();
+    res.json(allBooks)
 }
 
-module.exports.postBook = (req, res) => {
+export const postBook = async (req, res) => {
+    const newBook = new Book({
+        title: "Test Book 2",
+        author: "Amine"
+    })
+    await newBook.save();
     res.send("Posting new book")
 }
 
-module.exports.showBook = (req, res) => {
+export const showBook = async (req, res) => {
     const { id } = req.params
-    res.send(`Seeing specific book with id: ${id}`)
+    const foundBook = await Book.findById(id)
+    res.json(foundBook)
 }
 
-module.exports.editBook = (req, res) => {
+export const editBook = (req, res) => {
     const { id } = req.params
     res.send(`Editing book with id: ${id}`)
 }
 
-module.exports.deleteBook = (req, res) => {
+export const deleteBook = async (req, res) => {
     const { id } = req.params
-    res.send(`Deleting book with id: ${id}`)
+    await Book.findByIdAndDelete(id);
+    res.json("Book deleted")
 }
