@@ -2,6 +2,7 @@ import express from "express"
 const app = express();
 import booksRoutes from './routes/books.js'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 // brew services start mongodb/brew/mongodb-community@7.0
 // brew services stop mongodb/brew/mongodb-community@7.0
@@ -15,6 +16,7 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+app.use(cors())
 
 const port = 3000;
 
